@@ -265,17 +265,7 @@ for model, name in models:
 
 # In[27]:
 
-# Test Random Forest with different number of estimators
 
-for i in range(50,500,50):
-    rfc = RandomForestClassifier(n_estimators=i)
-    rfc.fit(x_train,y_train)
-    yptrain = rfc.predict(x_test)
-    print(str(i) + " estimators:")
-    print ("Accuracy:\t" + str(round(metrics.accuracy_score(y_test, yptrain),3)))
-    print ("Recall:\t" + str(round(metrics.recall_score(y_test, yptrain),3)))
-    print ("Precision:\t" + str(round(metrics.precision_score(y_test, yptrain),3)))
-    print ("F1:\t" + str(round(metrics.f1_score(y_test, yptrain),3)))
 
 
 # In[20]:
@@ -291,21 +281,20 @@ ypred_nn = nnet.predict(x_test)
 
 # In[28]:
 
-#Print Results
+# Define function to get test data set scores
 
-print ("Logistic Regression Test Results:")
-print ("Accuracy:\t" + str(round(metrics.accuracy_score(y_test, ypred),3)))
-print ("Precision:\t" + str(round(metrics.precision_score(y_test, ypred),3)))
-print ("F1:\t\t" + str(round(metrics.f1_score(y_test, ypred),3)))
-print ("Recall:\t\t" + str(round(metrics.recall_score(y_test, ypred),3)))
-print ("\nConfusion Matrix:\n" + str(metrics.confusion_matrix(y_test,ypred)))
+def print_metrics(model, y_test, ypred):
+    print (str(model) + "Test Results:\n")
+    print ("Accuracy:\t" + str(round(metrics.accuracy_score(y_test, ypred),3)))
+    print ("Precision:\t" + str(round(metrics.precision_score(y_test, ypred),3)))
+    print ("F1:\t\t" + str(round(metrics.f1_score(y_test, ypred),3)))
+    print ("Recall:\t\t" + str(round(metrics.recall_score(y_test, ypred),3)))
+    print ("\nConfusion Matrix:\n" + str(metrics.confusion_matrix(y_test,ypred)))
 
-print ("\n\nNeural Network Test Results:")
-print ("Accuracy:\t" + str(round(metrics.accuracy_score(y_test, ypred_nn),3)))
-print ("Precision:\t" + str(round(metrics.precision_score(y_test, ypred_nn),3)))
-print ("F1:\t\t" + str(round(metrics.f1_score(y_test, ypred_nn),3)))
-print ("Recall:\t\t" + str(round(metrics.recall_score(y_test, ypred_nn),3)))
-print ("\nConfusion Matrix:\n" + str(metrics.confusion_matrix(y_test,ypred_nn)))
+#Print Results for Log Reg, NNet
+
+print_metrics("Logistic Regression", y_test, ypred)
+print_metrics("\n\nNeural Network", y_test, ypred_nn)
 
 
 # In[22]:
@@ -316,19 +305,23 @@ print(np.bincount(y_test))
 # In[143]:
 
 #Try with different parameters
-logreg2 = LogisticRegression(penalty='l1')
+logreg2 = LogisticRegression(penalty='l2')
 logreg2.fit(x_train,y_train)
 ypred2 = logreg2.predict(x_test)
-print ("Accuracy:\t" + str(metrics.accuracy_score(y_test, ypred2)))
-print ("Precision:\t" + str(metrics.precision_score(y_test, ypred2)))
-print ("F1:\t\t" + str(round(metrics.f1_score(y_test, ypred2),2)))
-print ("Recall:\t\t" + str(round(metrics.recall_score(y_test, ypred2),2)))
-print ("\nL1 Confusion Matrix:\n" + str(metrics.confusion_matrix(y_test,ypred2)))
+print_metrics("Logistic Regression L2", y_test, ypred2)
 
 
 # In[144]:
 
 print(np.bincount(y_test))
+
+# Test Random Forest with different number of estimators
+
+for i in range(50,500,50):
+    rfc = RandomForestClassifier(n_estimators=i)
+    rfc.fit(x_train,y_train)
+    yptrain = rfc.predict(x_test)
+    print_metrics(i, y_test, yptrain)
 
 
 # In[145]:
