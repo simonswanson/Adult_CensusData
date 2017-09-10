@@ -331,26 +331,6 @@ print ("\nL1 Confusion Matrix:\n" + str(metrics.confusion_matrix(y_test,ypred2))
 print(np.bincount(y_test))
 
 
-# L2, C = 0.0001
-# Accuracy:	0.826054910632
-# Precision:	0.612766903915
-# F1:		0.66
-# Recall:		0.72
-# 
-# L2, C = 0.00001
-# 
-# Accuracy:	0.765432098765
-# Precision:	0.50202065559
-# F1:		0.64
-# Recall:		0.87
-# 
-# C = 0.000001
-# Accuracy:	0.749831091456
-# Precision:	0.483966661958
-# F1:		0.63
-# Recall:		0.89
-# 
-
 # In[145]:
 
 print(logreg.intercept_)
